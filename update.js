@@ -11,6 +11,10 @@ const extractDependency = require('./lib/extract-dependency')
 const updateLockfile = require('./lib/update-lockfile')
 const info = require('./ci-services')()
 
+const gitHelpers = require('./lib/git-helpers')
+
+const env = process.env
+
 const pkg = relative('./package.json')
 
 module.exports = function update () {
@@ -42,6 +46,7 @@ module.exports = function update () {
   }
 
   if (!info.firstPush) {
+    console.log('getNumberOfCommitsOnBranch: ', gitHelpers.getNumberOfCommitsOnBranch(env.CIRCLE_BRANCH))
     return console.error('Only running on first push of a new branch')
   }
 
