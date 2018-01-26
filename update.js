@@ -22,6 +22,8 @@ module.exports = function update () {
   const packageLockExists = fs.existsSync('./package-lock.json')
   const yarnLockExists = fs.existsSync('./yarn.lock')
 
+  console.log('getNumberOfCommitsOnBranch: ', gitHelpers.getNumberOfCommitsOnBranch(env.CIRCLE_BRANCH))
+
   if (!(shrinkwrapExists || packageLockExists || yarnLockExists)) {
     return console.error(
       'Without either an "npm-shrinkwrap.json", "package-lock.json" or "yarn.lock" file present there is no need to run this script'
@@ -46,7 +48,6 @@ module.exports = function update () {
   }
 
   if (!info.firstPush) {
-    console.log('getNumberOfCommitsOnBranch: ', gitHelpers.getNumberOfCommitsOnBranch(env.CIRCLE_BRANCH))
     return console.error('Only running on first push of a new branch')
   }
 
